@@ -1,5 +1,24 @@
 #!/bin/bash
 
+function print_processors() {
+	processors=$(grep -c processor /proc/cpuinfo)
+	echo -e "Number of cpus\t\t: $processors"
+}
+
+function print_os() {
+	os_id=$(grep ^"ID=" /etc/os-release|cut -d "=" -f2)
+	os_version_id=$(grep ^"VERSION_ID=" /etc/os-release|cut -d "=" -f2)
+	echo -e "Operating System\t: $os_id ($os_version_id)"
+}
+
+function print_env() {
+	echo "*************************************************"
+	echo "*               System Environment              *"
+	echo -e "*************************************************\n"
+	print_os
+	print_processors
+}
+
 function find_controller_mount_point() {
 	if [ "$1" == "cpu" ]; then
 		mount_point=$(grep "cgroup" /proc/mounts|grep "$1"|grep -v cpuset|awk '{print $2}')
