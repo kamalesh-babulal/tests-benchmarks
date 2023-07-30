@@ -11,12 +11,23 @@ function print_os() {
 	echo -e "Operating System\t: $os_id ($os_version_id)"
 }
 
+function print_cgroup_setup() {
+	cgroup_setup_mode=$(cgget -m)
+	echo -en "cgroup_setup mode\t: "
+	if [ -z "$cgroup_setup_mode" ]; then
+		echo "Missing libcgroup package or cgget missing -m support"
+	else
+		echo "$cgroup_setup_mode"
+	fi
+}
+
 function print_env() {
 	echo "*************************************************"
 	echo "*               System Environment              *"
 	echo -e "*************************************************\n"
 	print_os
 	print_processors
+	print_cgroup_setup
 }
 
 function find_controller_mount_point() {
