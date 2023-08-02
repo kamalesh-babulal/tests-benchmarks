@@ -5,6 +5,12 @@ function print_processors() {
 	echo -e "Number of cpus\t\t: $processors"
 }
 
+function print_memory() {
+	phy_mem=$(free -g|grep -iv total|head -n1|awk   '{print $1" "$2}')
+	swap_mem=$(free -g|grep -iv total|grep -iv ^mem|head -n1|awk   '{print $1" "$2}')
+	echo -e "Memory\t\t\t: $phy_mem $swap_mem"
+}
+
 function print_os() {
 	os_id=$(grep ^"ID=" /etc/os-release|cut -d "=" -f2)
 	os_version_id=$(grep ^"VERSION_ID=" /etc/os-release|cut -d "=" -f2)
@@ -28,6 +34,7 @@ function print_env() {
 	print_os
 	print_processors
 	print_cgroup_setup
+	print_memory
 }
 
 function find_controller_mount_point() {
