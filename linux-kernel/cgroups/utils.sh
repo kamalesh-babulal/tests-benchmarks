@@ -38,6 +38,7 @@ function print_env() {
 }
 
 function find_controller_mount_point() {
+	cgroupv2=0
 	if [ "$1" == "cpu" ]; then
 		mount_point=$(grep "cgroup" /proc/mounts|grep "$1"|grep -v cpuset|awk '{print $2}')
 	else
@@ -46,6 +47,7 @@ function find_controller_mount_point() {
 
 	if [ -z "$mount_point" ]; then
 		mount_point=$(grep "cgroup2" /proc/mounts|grep "$1"|awk '{print $2}')
+		cgroupv2=1
 	fi
 
 	if [ -z "$mount_point" ]; then
@@ -54,7 +56,7 @@ function find_controller_mount_point() {
 	fi
 
 	base_name=$(basename "$mount_point")
-	if [[ "$base_name" == "$1" ]] || [[ "$base_name" =~ ^"$1," ]] || [[ "$base_name" =~ ",$1"$ ]]; then
+	if [[ "$base_name" == "$1" ]] || [[ "$base_name" =~ ^"$1," ]] || [[ "$base_name" =~ ",$1"$ ]] || [[ "$cgroupv2" -eq 1 ]]; then
 		echo "$mount_point"
 		return
 	fi
