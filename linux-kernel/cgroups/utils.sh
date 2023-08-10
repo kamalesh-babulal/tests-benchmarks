@@ -46,7 +46,7 @@ function find_controller_mount_point() {
 	fi
 
 	if [ -z "$mount_point" ]; then
-		mount_point=$(grep "cgroup2" /proc/mounts|awk '{print $2}')
+		imount_point=$(grep "cgroup2" /proc/mounts|awk '{print $2}')
 		cgroupv2=1
 	fi
 
