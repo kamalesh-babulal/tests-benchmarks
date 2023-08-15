@@ -64,3 +64,13 @@ function find_controller_mount_point() {
 	echo "Invalid cgroup setup or controller $1 not found"
 	return
 }
+
+function is_unified() {
+        mode=$(cgget -m)
+
+        if [[ "$mode" =~ ^"Unified Mode*" ]]; then
+                echo "1"
+        else
+                echo "0"
+        fi
+}
