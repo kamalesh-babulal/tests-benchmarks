@@ -74,3 +74,13 @@ function is_unified() {
                 echo "0"
         fi
 }
+
+function is_hybrid() {
+        mode=$(cgget -m)
+
+        if [[ "$mode" = Hybrid* ]]; then
+                echo "1"
+        else
+                echo "0"
+        fi
+}
