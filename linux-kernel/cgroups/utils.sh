@@ -84,3 +84,13 @@ function is_hybrid() {
                 echo "0"
         fi
 }
+
+function is_legacy() {
+        mode=$(cgget -m)
+
+        if [[ "$mode" = Legacy* ]]; then
+                echo "1"
+        else
+                echo "0"
+        fi
+}
