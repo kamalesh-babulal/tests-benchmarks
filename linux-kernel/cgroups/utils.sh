@@ -68,7 +68,7 @@ function find_controller_mount_point() {
 function is_unified() {
         mode=$(cgget -m)
 
-        if [[ "$mode" =~ ^"Unified Mode*" ]]; then
+	if [[ "$mode" = Unified* ]]; then
                 echo "1"
         else
                 echo "0"
